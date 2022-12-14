@@ -115,5 +115,4 @@ func getPointsFromRange(v float64, steps[]float64) int{
 			return lenSteps -i
 		}
 	}
-	return 0;
 }
