@@ -65,7 +65,7 @@ func (s SugarGram) GetPoints(st ScoreType) int {
 	if st == Beverage {
 		return getPointsFromRange(float64(s), sugarLevelsBeverage)
 	}
-	return getPointsFromRange(float64(s), energyLevels)
+	return getPointsFromRange(float64(s), sugarLevels)
 }
 
 func (sfa SaturatedFattyAcids) GetPoints(st ScoreType) int {
@@ -150,7 +150,7 @@ func (ns NutritionalScore) GetNutriScore() string {
 		return  scoreToLetter[0]
 	}
 	return scoreToLetter[getPointsFromRange(float64(ns.value),[]float64{9,5,1,-2})]
-}
+}	
 
 
 func getPointsFromRange(v float64, steps []float64) int {
