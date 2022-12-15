@@ -19,7 +19,7 @@ type NutritionalScore struct {
 var energyLevels = []float64{3350, 3015, 2680, 2345, 2010, 1675, 1340, 1005, 670, 335}
 var sugarLevels = []float64{45, 60, 36, 31, 27, 22.5, 18, 13.5, 9, 4.5}
 var sodiumLevels = []float64{900, 810, 720, 630, 540, 450, 360,270, 180, 90}
-var saturatedFattyAcids = []float64{10, 9, 8, 7, 6, 5, 4, 3, 2, 1}
+var saturatedFattyAcidsLevels = []float64{10, 9, 8, 7, 6, 5, 4, 3, 2, 1}
 var fibreLevels = []float64{4.7, 3.7, 2.8, 1.9, 0.9}
 var proteinLevels = []float64{8, 6.4, 4.8, 3.2, 1.6}
 
@@ -52,31 +52,38 @@ type NutritionalData struct {
 }
 
 	func (e EnergyKJ)GetPoints(st ScoreType) int{
-
+		if st == Beverage{
+			return getPointsFromRange(float64(e),energyLevelsBeverage)
+		}
+		return getPointsFromRange(float64(e),energyLevels)
 	}
 
 	func (s SugarGram)GetPoints(st ScoreType) int {
 
+		if st == Beverage{
+			return getPointsFromRange(float64(s),sugarLevelsBeverage)
+		}
+		return getPointsFromRange(float64(s),energyLevels)
 	}
 	
 	func (sfa SaturatedFattyAcids)GetPoints(st ScoreType) int {
-
+			return getPointsFromRange(float64(sfa),saturatedFattyAcidsLevels)
 	}
 
 	func (sdm SodiumMilligram)GetPoints(st ScoreType) int {
-
+		return getPointsFromRange(float64(sdm),sodiumLevels)
 	}
 
 	func (fp FruitsPercentage) GetPoints(st ScoreType) int {
-
+		
 	}
 
 	func (fg FibreGram) GetPoints(st ScoreType) int {
-
+		return getPointsFromRange(float64(fg),fibreLevels)
 	}
 
 	func (p ProteinGram) GetPoints(st ScoreType) int {
-		
+		return getPointsFromRange(float64(p),proteinLevels)	
 	}
 
 	func Energyfromkcal(kcal float64) EnergyKJ{
