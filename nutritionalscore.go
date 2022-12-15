@@ -3,7 +3,7 @@ package main
 type ScoreType int
 
 const(
-	Food = iota
+	Food ScoreType = iota
 	Water
 	Beverage
 	Cheese
@@ -124,7 +124,11 @@ func Getnutritionalscore(n NutritionalData, st ScoreType) NutritionalScore {
 		negative = n.Sugars.GetPoints(st) + n.Energy.GetPoints(st) + n.SaturatedFattyAcids.GetPoints(st) + n.Sodium.GetPoints(st)  
 		positive = FruitPoint + FibrePoint + n.Proteins.GetPoints(st)
 	if st == Cheese{
-		value
+		value = negative - positive 
+	} else if negative >= 11 && FruitPoint < 5{
+		value = negative - positive - FruitPoint
+	} else {
+		value = negative - positive 
 	}
 	}
 
