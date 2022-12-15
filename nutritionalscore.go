@@ -19,7 +19,7 @@ type NutritionalScore struct {
 var energyLevels = []float64{3350, 3015, 2680, 2345, 2010, 1675, 1340, 1005, 670, 335}
 var sugarLevels = []float64{45, 60, 36, 31, 27, 22.5, 18, 13.5, 9, 4.5}
 var sodiumLevels = []float64{900, 810, 720, 630, 540, 450, 360,270, 180, 90}
-var saturatedFattyAcidsLevels = []float64{10, 9, 8, 7, 6, 5, 4, 3, 2, 1}
+var saturatedFattyAcids = []float64{10, 9, 8, 7, 6, 5, 4, 3, 2, 1}
 var fibreLevels = []float64{4.7, 3.7, 2.8, 1.9, 0.9}
 var proteinLevels = []float64{8, 6.4, 4.8, 3.2, 1.6}
 
@@ -44,7 +44,7 @@ type NutritionalData struct {
 	Sugars  SugarGram
 	Energy  EnergyKJ
 	Proteins ProteinGram
-	FattyAcids SaturatedFattyAcids 
+	SaturatedFattyAcids SaturatedFattyAcids 
 	Fibre FibreGram 
 	Sodium SodiumMilligram 
 	Fruits FruitsPercentage 
@@ -94,11 +94,11 @@ func Getnutritionalscore(n NutritionalData, st ScoreType) NutritionalScore {
 	negative := 0
 
 	if st != Water{
-		FruitPoint := n.Fruits.GetPoints()
-		FibrePoint := n.Fibre.GetPoints()
+		FruitPoint := n.Fruits.GetPoints(st)
+		FibrePoint := n.Fibre.GetPoints(st)
 
 		negative = n.Sugars.GetPoints(st) + n.Energy.GetPoints(st) + n.SaturatedFattyAcids.GetPoints(st) + n.Sodium.GetPoints(st)  
-		positive = FuitsPoint + FibrePoint + n.Proteins.GetPoints(st)
+		positive = FruitPoint + FibrePoint + n.Proteins.GetPoints(st)
 	}
 
 	return NutritionalScore{
@@ -106,13 +106,13 @@ func Getnutritionalscore(n NutritionalData, st ScoreType) NutritionalScore {
 	positive: positive,
 	negative: negative,
 	Scoretype: st,
-}
+}}
 
-func getPointsFromRange(v float64, steps[]float64) int{
+func getPointsFromRange(v float64, steps []float64) int {
 	lenSteps := len(steps)
-	for i, l:= range(steps){
-		if i>l {
-			return lenSteps -i
+	for i, l:= range steps {
+		if v > l {
+			return lenSteps - i
 		}
 	}
 	return 0;
